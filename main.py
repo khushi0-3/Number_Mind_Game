@@ -7,7 +7,6 @@ def main():
 
     secret_num = random.sample(range(1, 20),3)
     Secret = secret_num
-    print(Secret)
 
     print("Welcome here for Mystery Box — Number Mind Game", flush=True)
     time.sleep(1)
