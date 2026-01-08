@@ -1,43 +1,56 @@
 import random, time
 
+# --------- FUNCTIONS ---------
+
+# It's for how many numbers are correct
+def is_correct(Secret, user_guess):
+    correct_num = 0
+    for r in Secret:
+        if r in user_guess:
+            correct_num += 1
+    return correct_num
+    
+# It's for how many numbers are correct and for correct poistion also
+def correct_position(Secret, user_guess):
+    correct_pos = 0
+    for r in range(min(len(Secret), len(user_guess))):
+        if Secret[r] == user_guess[r]:
+            correct_pos += 1
+    return correct_pos
+
+# It's for how many numbers are correct, butin wrong position
+def correct_wrong_position(Secret, user_guess):
+    any_pos = is_correct(Secret, user_guess)
+    c_pos = correct_position(Secret, user_guess)
+    return any_pos - c_pos
+
+
+# --------- MAIN GAME ---------
+
 def main():
     bot_name = "Bot"
     user_name = "You"
     end = ["end", "stop", "no", "n"]
-
-    secret_num = random.sample(range(1, 20),3)
-    Secret = secret_num
+    Rules = '''Rules:
+- Guess 3 numbers between 1 and 20
+- Numbers must be unique
+- Enter numbers in this format: e.g., 1, 15, 6
+- Type 'end' or 'no' to quit the game'''
 
     print("Welcome here for Mystery Box — Number Mind Game", flush=True)
     time.sleep(1)
-
-    # It's for how many numbers are correct
-    def is_correct(Secret, user_guess):
-        correct_num = 0
-        for r in Secret:
-            if r in user_guess:
-                correct_num += 1
-        return correct_num
-    
-    # It's for how many numbers are correct and for correct poistion also
-    def correct_position(Secret, user_guess):
-        correct_pos = 0
-        for r in range(min(len(Secret), len(user_guess))):
-            if Secret[r] == user_guess[r]:
-                correct_pos += 1
-        return correct_pos
-    
-    # It's for how many numbers are correct, butin wrong position
-    def correct_wrong_position(Secret, user_guess):
-        any_pos = is_correct(Secret, user_guess)
-        c_pos = correct_position(Secret, user_guess)
-        return any_pos - c_pos
-
+    print(Rules)
+    print()
 
     while True:
         user_input = input(f"{bot_name}: Would you like to play this Game (Yes/No): ").strip().lower()
-
+        
         if user_input == ("Yes").lower() or user_input == ("Y").lower():
+
+            print("\n🎮 New Game Started!\n")
+
+            secret_num = random.sample(range(1, 20),3)
+            Secret = secret_num
 
             while True:
                 user_guess = input(f"{user_name}: Enter any 3 Numbers (between 1 to 20): ").strip().lower()
